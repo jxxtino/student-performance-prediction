@@ -6,7 +6,7 @@ from sklearn import model_selection
 pd.options.display.max_columns = 500
 pd.options.display.max_rows = 500
 
-df = pd.read_csv("../data/raw/StudentsPerformance.csv")
+df = pd.read_csv("../data/01-raw/StudentsPerformance.csv")
 
 target = "average score"
 score_cols = ["math score", "reading score", "writing score"]
@@ -30,8 +30,12 @@ X_train, X_test, y_train, y_test = model_selection.train_test_split(
     stratify=y
 )
 
-df_sampled.to_csv(
-    "../data/interim/StudentsPerformance_Sampled", 
+X_train.assign(target=y_train).to_csv(
+    "../data/02-interim/train.csv", 
     index=False
-    )
+)
 
+X_test.assign(target=y_test).to_csv(
+    "../data/02-interim/test.csv", 
+    index=False
+)
